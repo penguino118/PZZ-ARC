@@ -95,7 +95,18 @@ namespace PZZ_ARC
             }
 
         }
+        private void StripFileSave_Click(object sender, EventArgs e)
+        {
+            using (var stream = File.Open(input_file, FileMode.Create))
+            {
+                List<byte> output_data = new List<byte>();
 
+                using (var writer = new BinaryWriter(stream))
+                {
+                    WriteOutputData(writer, stream, file_list);
+                }
+            }
+        }
         private void StripFileSaveAs_Click(object sender, EventArgs e)
         {
             string initial_output_name = input_file;
@@ -358,5 +369,12 @@ namespace PZZ_ARC
             About about_window = new About();
             about_window.Show();
         }
+
+        private void StripFileExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        
     }
 }

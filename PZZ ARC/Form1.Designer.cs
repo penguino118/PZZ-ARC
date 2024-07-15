@@ -36,8 +36,10 @@
             StripFileSave = new ToolStripMenuItem();
             StripFileSaveAs = new ToolStripMenuItem();
             toolStripSeparator4 = new ToolStripSeparator();
-            exitToolStripMenuItem = new ToolStripMenuItem();
+            StripFileExit = new ToolStripMenuItem();
             StripEdit = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            StripAboutPZZARC = new ToolStripMenuItem();
             FileTree = new TreeView();
             ContextPZZInner = new ContextMenuStrip(components);
             ContextPZZImport = new ToolStripMenuItem();
@@ -56,8 +58,6 @@
             toolStripSeparator3 = new ToolStripSeparator();
             ContextPZZExportAll = new ToolStripMenuItem();
             ContextPZZImportAll = new ToolStripMenuItem();
-            aboutToolStripMenuItem = new ToolStripMenuItem();
-            StripAboutPZZARC = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ContextPZZInner.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -78,7 +78,7 @@
             // 
             // StripFile
             // 
-            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileSave, StripFileSaveAs, toolStripSeparator4, exitToolStripMenuItem });
+            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileSave, StripFileSaveAs, toolStripSeparator4, StripFileExit });
             StripFile.Image = Properties.Resources.UIStripFile;
             StripFile.Name = "StripFile";
             StripFile.Size = new Size(53, 20);
@@ -88,7 +88,7 @@
             // 
             StripFileOpen.Image = Properties.Resources.UIFileOpen;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(121, 22);
+            StripFileOpen.Size = new Size(180, 22);
             StripFileOpen.Text = "Open";
             StripFileOpen.Click += StripFileOpen_Click;
             // 
@@ -96,27 +96,29 @@
             // 
             StripFileSave.Image = Properties.Resources.UIFileSave;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(121, 22);
+            StripFileSave.Size = new Size(180, 22);
             StripFileSave.Text = "Save";
+            StripFileSave.Click += StripFileSave_Click;
             // 
             // StripFileSaveAs
             // 
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(121, 22);
+            StripFileSaveAs.Size = new Size(180, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(118, 6);
+            toolStripSeparator4.Size = new Size(177, 6);
             // 
-            // exitToolStripMenuItem
+            // StripFileExit
             // 
-            exitToolStripMenuItem.Image = Properties.Resources.UIExit;
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(121, 22);
-            exitToolStripMenuItem.Text = "Exit";
+            StripFileExit.Image = Properties.Resources.UIExit;
+            StripFileExit.Name = "StripFileExit";
+            StripFileExit.Size = new Size(180, 22);
+            StripFileExit.Text = "Exit";
+            StripFileExit.Click += StripFileExit_Click;
             // 
             // StripEdit
             // 
@@ -125,6 +127,21 @@
             StripEdit.Name = "StripEdit";
             StripEdit.Size = new Size(55, 20);
             StripEdit.Text = "Edit";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { StripAboutPZZARC });
+            aboutToolStripMenuItem.Image = Properties.Resources.UIAbout;
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(68, 20);
+            aboutToolStripMenuItem.Text = "About";
+            // 
+            // StripAboutPZZARC
+            // 
+            StripAboutPZZARC.Name = "StripAboutPZZARC";
+            StripAboutPZZARC.Size = new Size(123, 22);
+            StripAboutPZZARC.Text = "PZZ-ARC";
+            StripAboutPZZARC.Click += StripAboutPZZARC_Click;
             // 
             // FileTree
             // 
@@ -271,21 +288,6 @@
             ContextPZZImportAll.Text = "Import All";
             ContextPZZImportAll.Click += ContextPZZImportAll_Click;
             // 
-            // aboutToolStripMenuItem
-            // 
-            aboutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { StripAboutPZZARC });
-            aboutToolStripMenuItem.Image = Properties.Resources.UIAbout;
-            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(68, 20);
-            aboutToolStripMenuItem.Text = "About";
-            // 
-            // StripAboutPZZARC
-            // 
-            StripAboutPZZARC.Name = "StripAboutPZZARC";
-            StripAboutPZZARC.Size = new Size(180, 22);
-            StripAboutPZZARC.Text = "PZZ-ARC";
-            StripAboutPZZARC.Click += StripAboutPZZARC_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -335,7 +337,7 @@
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripMenuItem StripEdit;
         private ToolStripSeparator toolStripSeparator4;
-        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem StripFileExit;
         private ToolStripMenuItem ContextPZZStub;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem StripAboutPZZARC;
