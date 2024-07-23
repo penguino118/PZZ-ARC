@@ -151,6 +151,27 @@ namespace PZZ_ARC.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GNU GENERAL PUBLIC LICENSE
+        ///
+        ///Version 2, June 1991
+        ///
+        ///Copyright (C) 1989, 1991 Free Software Foundation, Inc.  
+        ///51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+        ///
+        ///Everyone is permitted to copy and distribute verbatim copies
+        ///of this license document, but changing it is not allowed.
+        ///
+        ///Preamble
+        ///
+        ///The licenses for most software are designed to take away your freedom to share and change it. By contrast, the GNU General Public License is intended to guarantee your freedom to share and change free [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string RainbowLicense {
+            get {
+                return ResourceManager.GetString("RainbowLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap RootICO {
@@ -206,6 +227,126 @@ namespace PZZ_ARC.Properties {
         internal static System.Drawing.Bitmap TextureICO {
             get {
                 object obj = ResourceManager.GetObject("TextureICO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_arrow_undo {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.arrow_undo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_color_swatch {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.color_swatch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_folder_magnify {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.folder_magnify", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_folder_picture {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.folder_picture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_image {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_image_add {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.image_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_image_delete {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.image_delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_image_edit {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.image_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_picture_edit {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.picture_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_zoom {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.zoom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_zoom_in {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.zoom_in", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TXBEd_zoom_out {
+            get {
+                object obj = ResourceManager.GetObject("TXBEd.zoom_out", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

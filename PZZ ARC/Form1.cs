@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using PZZ_ARC.PZZArc;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static PZZ_ARC.PZZArc.PZZ;
+
 namespace PZZ_ARC
 {
     public partial class Form1 : Form
@@ -31,7 +32,14 @@ namespace PZZ_ARC
         readonly FolderPicker ffd = new FolderPicker();
 
 
-
+        public void ReplaceBufferAtSelected(byte[] new_buffer)
+        {
+            int index = FileTree.SelectedNode.Index;
+            ReplaceFileOnList(file_list, index, new_buffer);
+            BuildTree(file_list);
+            FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index];
+            UpdatePropertyGrid();
+        }
 
         private void BuildTree(List<PZZFile> file_list)
         {
@@ -80,6 +88,8 @@ namespace PZZ_ARC
             }
             rootNode.Expand();
         }
+
+
 
         private void StripFileOpen_Click(object sender, EventArgs e)
         {
@@ -165,6 +175,7 @@ namespace PZZ_ARC
                 FileTree.SelectedNode = e.Node;
                 e.Node.ContextMenuStrip = ContextPZZInner; // context menu for files inside pzz
                 StripEdit.DropDown = ContextPZZInner; // for toolbar edit menu
+                SetTXBModifyVisibility(file_list[e.Node.Index].type == "TextureData"); //show txb option if selected file is txb
             }
             else if (e.Node.Level == 0)
             {
@@ -243,6 +254,12 @@ namespace PZZ_ARC
             MoveFileList(1);
         }
 
+        private void SetTXBModifyVisibility(bool value)
+        {
+            ContextPZZModifySeparator.Visible = value;
+            ContextPZZModifyTXB.Visible = value;
+        }
+
         private void ContextPZZExport_Click(object sender, EventArgs e)
         {
             int index = FileTree.SelectedNode.Index;
@@ -284,6 +301,8 @@ namespace PZZ_ARC
                 UpdatePropertyGrid();
             }
         }
+
+        
 
         private void ContextPZZExportAll_Click(object sender, EventArgs e)
         {
@@ -384,7 +403,7 @@ namespace PZZ_ARC
             if (ffd.ShowDialog(IntPtr.Zero) == true)
             {
                 string input_path = ffd.ResultPath;
-                
+
                 if (Directory.EnumerateFiles(input_path, "*.*").Count() > 255)
                 {
                     MessageBox.Show("Cannot fit more than 255 files into a single PZZ archive!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -407,6 +426,15 @@ namespace PZZ_ARC
                 StripFileSave.Enabled = true;
                 StripFileSaveAs.Enabled = true;
             }
+        }
+
+        private void ContextPZZModifyTXB_Click(object sender, EventArgs e)
+        {
+            int index = FileTree.SelectedNode.Index;
+            PZZFile txb = file_list[index];
+            var txb_form = new TXBeditor.Form1(this);
+            txb_form.Show();
+            txb_form.OpenFromPZZARC(txb.byte_array);
         }
     }
 }
