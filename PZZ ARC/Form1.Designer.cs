@@ -33,6 +33,8 @@
             menuStrip1 = new MenuStrip();
             StripFile = new ToolStripMenuItem();
             StripFileOpen = new ToolStripMenuItem();
+            StripFileFromFolder = new ToolStripMenuItem();
+            toolStripSeparator5 = new ToolStripSeparator();
             StripFileSave = new ToolStripMenuItem();
             StripFileSaveAs = new ToolStripMenuItem();
             toolStripSeparator4 = new ToolStripSeparator();
@@ -78,7 +80,7 @@
             // 
             // StripFile
             // 
-            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileSave, StripFileSaveAs, toolStripSeparator4, StripFileExit });
+            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileFromFolder, toolStripSeparator5, StripFileSave, StripFileSaveAs, toolStripSeparator4, StripFileExit });
             StripFile.Image = Properties.Resources.UIStripFile;
             StripFile.Name = "StripFile";
             StripFile.Size = new Size(53, 20);
@@ -92,8 +94,21 @@
             StripFileOpen.Text = "Open";
             StripFileOpen.Click += StripFileOpen_Click;
             // 
+            // StripFileFromFolder
+            // 
+            StripFileFromFolder.Name = "StripFileFromFolder";
+            StripFileFromFolder.Size = new Size(180, 22);
+            StripFileFromFolder.Text = "Create From Folder";
+            StripFileFromFolder.Click += StripFileFromFolder_Click;
+            // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(177, 6);
+            // 
             // StripFileSave
             // 
+            StripFileSave.Enabled = false;
             StripFileSave.Image = Properties.Resources.UIFileSave;
             StripFileSave.Name = "StripFileSave";
             StripFileSave.Size = new Size(180, 22);
@@ -102,6 +117,7 @@
             // 
             // StripFileSaveAs
             // 
+            StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
             StripFileSaveAs.Size = new Size(180, 22);
             StripFileSaveAs.Text = "Save as...";
@@ -155,7 +171,7 @@
             // 
             // ContextPZZInner
             // 
-            ContextPZZInner.Items.AddRange(new ToolStripItem[] { ContextPZZImport, ContextPZZExport, toolStripSeparator1, ContextPZZStub, ContextPZZDelete, ContextPZZDuplicate, toolStripSeparator2, ContextPZZMoveUp, ContextPZZMoveDown });
+            ContextPZZInner.Items.AddRange(new ToolStripItem[] { ContextPZZExport, ContextPZZImport, toolStripSeparator1, ContextPZZStub, ContextPZZDelete, ContextPZZDuplicate, toolStripSeparator2, ContextPZZMoveUp, ContextPZZMoveDown });
             ContextPZZInner.Name = "ContextPZZInner";
             ContextPZZInner.Size = new Size(139, 170);
             // 
@@ -341,5 +357,7 @@
         private ToolStripMenuItem ContextPZZStub;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem StripAboutPZZARC;
+        private ToolStripMenuItem StripFileFromFolder;
+        private ToolStripSeparator toolStripSeparator5;
     }
 }

@@ -92,6 +92,8 @@ namespace PZZ_ARC
                 file_list.Clear();
                 file_list = UnpackFromFile(input_file);
                 BuildTree(file_list);
+                StripFileSave.Enabled = true;
+                StripFileSaveAs.Enabled = true;
             }
 
         }
@@ -375,6 +377,36 @@ namespace PZZ_ARC
             Close();
         }
 
-        
+        private void StripFileFromFolder_Click(object sender, EventArgs e)
+        {
+
+            ffd.Title = "Create PZZ From Folder";
+            if (ffd.ShowDialog(IntPtr.Zero) == true)
+            {
+                string input_path = ffd.ResultPath;
+                
+                if (Directory.EnumerateFiles(input_path, "*.*").Count() > 255)
+                {
+                    MessageBox.Show("Cannot fit more than 255 files into a single PZZ archive!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                file_list.Clear();
+                file_list = new List<PZZFile>();
+
+                foreach (string file_import in Directory.EnumerateFiles(input_path, "*.*"))
+                {
+                    byte[] file_buffer = File.ReadAllBytes(file_import);
+                    bool is_compressed = false;
+                    string type = GetFileType(file_buffer);
+
+                    AddToList(file_list, file_buffer, is_compressed, type);
+                }
+                BuildTree(file_list);
+                FileTree.SelectedNode = FileTree.Nodes[0].Nodes[0];
+                UpdatePropertyGrid();
+                StripFileSave.Enabled = true;
+                StripFileSaveAs.Enabled = true;
+            }
+        }
     }
 }
