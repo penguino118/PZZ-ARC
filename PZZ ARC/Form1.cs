@@ -109,7 +109,7 @@ namespace PZZ_ARC
         }
         private void StripFileSave_Click(object sender, EventArgs e)
         {
-            using (var stream = File.Open(input_file, FileMode.Create))
+            using (var stream = File.Open(input_file, FileMode.OpenOrCreate))
             {
                 List<byte> output_data = new List<byte>();
 
