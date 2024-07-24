@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using AFSLib;
 using PZZ_ARC.PZZArc;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static PZZ_ARC.PZZArc.PZZ;
@@ -26,6 +27,7 @@ namespace PZZ_ARC
 
         string input_file = "";
         string output_file = "";
+        AFS current_afs = new AFS();
         List<PZZFile> file_list = new List<PZZFile>();
         readonly OpenFileDialog ofd = new OpenFileDialog();
         readonly SaveFileDialog sfd = new SaveFileDialog();
@@ -39,6 +41,25 @@ namespace PZZ_ARC
             BuildTree(file_list);
             FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index];
             UpdatePropertyGrid();
+        }
+
+        public void LoadFileFromAFS(int file_index)
+        {
+            try
+            {
+                StreamEntry afs_file = current_afs.Entries[file_index] as StreamEntry;
+                Stream filestream = afs_file.GetStream();
+                file_list.Clear();
+                UnpackFromStream(filestream, file_list);
+                BuildTree(file_list, afs_file.Name);
+                StripFileSave.Enabled = false;
+                StripFileSaveAs.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading from AFS.\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void BuildTree(List<PZZFile> file_list)
@@ -89,7 +110,53 @@ namespace PZZ_ARC
             rootNode.Expand();
         }
 
+        private void BuildTree(List<PZZFile> file_list, string root_name) // for afs load
+        {
+            FileTree.Nodes.Clear();
+            string filename = root_name;
 
+            // add icons to image list, should move this elsewhere
+            ImageList IconList = new ImageList();
+            IconList.Images.Add("FileRoot", Properties.Resources.RootICO);
+            IconList.Images.Add("ModelData", Properties.Resources.ModelICO);
+            IconList.Images.Add("SkeletonData", Properties.Resources.SkeletonICO);
+            IconList.Images.Add("TextureData", Properties.Resources.TextureICO);
+            IconList.Images.Add("AnimationData", Properties.Resources.AnimationICO);
+            IconList.Images.Add("ShadowData", Properties.Resources.ShadowICO);
+            IconList.Images.Add("CollisionData", Properties.Resources.CollisionICO);
+            IconList.Images.Add("StageCollisionData", Properties.Resources.StageCollisionICO);
+            IconList.Images.Add("TextData", Properties.Resources.TextICO);
+            IconList.Images.Add("Unknown", Properties.Resources.UnknownICO);
+            IconList.Images.Add("UIStub", Properties.Resources.UIStub);
+            FileTree.ImageList = IconList;
+
+            // create root, pzz itself
+            TreeNode rootNode = new TreeNode();
+            rootNode.Text = filename;
+            rootNode.ImageIndex = 0;
+            FileTree.Nodes.Add(rootNode);
+
+            for (int i = 0; i < file_list.Count; i++)
+            {
+                var file = file_list[i];
+                TreeNode fileNode = new TreeNode();
+                fileNode.Text = "File " + i.ToString("D3") + " (." + GetFileExtension(file.type) + ")"; // name
+
+                if (file.byte_array.Count() > 0)
+                {
+                    fileNode.ImageKey = file.type;
+                    fileNode.SelectedImageKey = file.type;
+                }
+                else // if file is empty
+                {
+                    fileNode.ImageKey = "UIStub";
+                    fileNode.SelectedImageKey = "UIStub";
+                    fileNode.ToolTipText = "Empty Data";
+                }
+                FileTree.Nodes[rootNode.Index].Nodes.Add(fileNode); // add to root
+            }
+            rootNode.Expand();
+        }
 
         private void StripFileOpen_Click(object sender, EventArgs e)
         {
@@ -109,6 +176,11 @@ namespace PZZ_ARC
         }
         private void StripFileSave_Click(object sender, EventArgs e)
         {
+            if (input_file is null)
+            {
+                MessageBox.Show("The ouput path for the file is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             using (var stream = File.Open(input_file, FileMode.OpenOrCreate))
             {
                 List<byte> output_data = new List<byte>();
@@ -302,7 +374,7 @@ namespace PZZ_ARC
             }
         }
 
-        
+
 
         private void ContextPZZExportAll_Click(object sender, EventArgs e)
         {
@@ -435,6 +507,26 @@ namespace PZZ_ARC
             var txb_form = new TXBeditor.Form1(this);
             txb_form.Show();
             txb_form.OpenFromPZZARC(txb.byte_array);
+        }
+
+        private void StripFileFromAFS_Click(object sender, EventArgs e)
+        {
+            ofd.Title = "Select AFS File";
+            ofd.Filter = "AFS Files|*.afs";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string input_afs = ofd.FileName;
+                List<string> filelist = new List<string>();
+                current_afs = new AFS(input_afs);
+                
+                foreach (StreamEntry entry in current_afs.Entries)
+                {
+                    filelist.Add(entry.Name);
+                }
+                var filepicker_form = new AFSFilePicker(this);
+                filepicker_form.Show();
+                filepicker_form.BuildTree(Path.GetFileName(input_afs), filelist);
+            }
         }
     }
 }

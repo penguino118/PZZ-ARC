@@ -62,6 +62,7 @@
             toolStripSeparator3 = new ToolStripSeparator();
             ContextPZZExportAll = new ToolStripMenuItem();
             ContextPZZImportAll = new ToolStripMenuItem();
+            StripFileFromAFS = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ContextPZZInner.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -82,7 +83,7 @@
             // 
             // StripFile
             // 
-            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileFromFolder, toolStripSeparator5, StripFileSave, StripFileSaveAs, toolStripSeparator4, StripFileExit });
+            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileFromAFS, StripFileFromFolder, toolStripSeparator5, StripFileSave, StripFileSaveAs, toolStripSeparator4, StripFileExit });
             StripFile.Image = Properties.Resources.UIStripFile;
             StripFile.Name = "StripFile";
             StripFile.Size = new Size(53, 20);
@@ -92,28 +93,28 @@
             // 
             StripFileOpen.Image = Properties.Resources.UIFileOpen;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(175, 22);
+            StripFileOpen.Size = new Size(180, 22);
             StripFileOpen.Text = "Open";
             StripFileOpen.Click += StripFileOpen_Click;
             // 
             // StripFileFromFolder
             // 
             StripFileFromFolder.Name = "StripFileFromFolder";
-            StripFileFromFolder.Size = new Size(175, 22);
+            StripFileFromFolder.Size = new Size(180, 22);
             StripFileFromFolder.Text = "Create From Folder";
             StripFileFromFolder.Click += StripFileFromFolder_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(172, 6);
+            toolStripSeparator5.Size = new Size(177, 6);
             // 
             // StripFileSave
             // 
             StripFileSave.Enabled = false;
             StripFileSave.Image = Properties.Resources.UIFileSave;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(175, 22);
+            StripFileSave.Size = new Size(180, 22);
             StripFileSave.Text = "Save";
             StripFileSave.Click += StripFileSave_Click;
             // 
@@ -121,20 +122,20 @@
             // 
             StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(175, 22);
+            StripFileSaveAs.Size = new Size(180, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(172, 6);
+            toolStripSeparator4.Size = new Size(177, 6);
             // 
             // StripFileExit
             // 
             StripFileExit.Image = Properties.Resources.UIExit;
             StripFileExit.Name = "StripFileExit";
-            StripFileExit.Size = new Size(175, 22);
+            StripFileExit.Size = new Size(180, 22);
             StripFileExit.Text = "Exit";
             StripFileExit.Click += StripFileExit_Click;
             // 
@@ -320,6 +321,13 @@
             ContextPZZImportAll.Text = "Import All";
             ContextPZZImportAll.Click += ContextPZZImportAll_Click;
             // 
+            // StripFileFromAFS
+            // 
+            StripFileFromAFS.Name = "StripFileFromAFS";
+            StripFileFromAFS.Size = new Size(180, 22);
+            StripFileFromAFS.Text = "Load From AFS...";
+            StripFileFromAFS.Click += StripFileFromAFS_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -377,5 +385,6 @@
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripMenuItem ContextPZZModifyTXB;
         private ToolStripSeparator ContextPZZModifySeparator;
+        private ToolStripMenuItem StripFileFromAFS;
     }
 }

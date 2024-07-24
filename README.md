@@ -11,3 +11,6 @@ You can inspect the contents of any valid .pzz file and modify the content  insi
 * **.hit** - Player Collision Data
 * **.hits** - Stage Collision Data
 * **.txt** - Text Data
+
+## AFSLib
+To load .pzz files from AFS archives, [AFSLib](https://github.com/MaikelChan/AFSLib/tree/main) is used, which is licensed under the [MIT license](https://github.com/penguino118/PZZ-ARC/Tools/AFSLib/blob/main/AFSLib/LICENSE).

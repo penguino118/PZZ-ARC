@@ -313,35 +313,41 @@ namespace PZZ_ARC.PZZArc
         static public List<PZZFile> UnpackFromFile(string file_path)
         {
             List<PZZFile> file_list = new List<PZZFile>();
-            long file_reader_position = 0x800;
+            
             using (var stream = File.Open(file_path, FileMode.Open))
             {
-                using (var reader = new BinaryReader(stream))
-                {
-                    int file_count = reader.ReadInt32();
-
-                    for (int i = 0; i < file_count; i++)
-                    {
-                        short sector_count = reader.ReadInt16();
-                        bool is_compressed = reader.ReadInt16() == -32768;
-
-                        long original_stream_position = stream.Position;
-                        stream.Position = file_reader_position; // get da files
-                        byte[] file_buffer = reader.ReadBytes(sector_count*0x800); // get bytes
-                        if (is_compressed) file_buffer = GetDecompressed(file_buffer); // decompress if compressed
-                        file_reader_position = stream.Position;
-                        stream.Position = original_stream_position;
-
-                        string type = "Unknown";
-                        if (file_buffer.Length > 4) type = GetFileType(file_buffer);
-
-
-                        AddToList(file_list, file_buffer, is_compressed, type);
-
-                    }
-                }
+                UnpackFromStream(stream, file_list);
             }
             return file_list;
+        }
+
+        static public void UnpackFromStream(Stream stream, List<PZZFile> file_list)
+        {
+            long file_reader_position = 0x800;
+            using (var reader = new BinaryReader(stream))
+            {
+                int file_count = reader.ReadInt32();
+
+                for (int i = 0; i < file_count; i++)
+                {
+                    short sector_count = reader.ReadInt16();
+                    bool is_compressed = reader.ReadInt16() == -32768;
+
+                    long original_stream_position = stream.Position;
+                    stream.Position = file_reader_position; // get da files
+                    byte[] file_buffer = reader.ReadBytes(sector_count * 0x800); // get bytes
+                    if (is_compressed) file_buffer = GetDecompressed(file_buffer); // decompress if compressed
+                    file_reader_position = stream.Position;
+                    stream.Position = original_stream_position;
+
+                    string type = "Unknown";
+                    if (file_buffer.Length > 4) type = GetFileType(file_buffer);
+
+
+                    AddToList(file_list, file_buffer, is_compressed, type);
+
+                }
+            }
         }
 
         static public void WriteOutputData(BinaryWriter writer, FileStream stream, List<PZZFile> file_list)
