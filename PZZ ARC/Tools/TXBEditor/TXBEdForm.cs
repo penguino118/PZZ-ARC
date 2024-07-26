@@ -36,10 +36,12 @@ namespace TXBeditor
         bool save_to_pzzarc = false;
         PZZ_ARC.Form1 pzz_arc;
 
-        public Form1(PZZ_ARC.Form1 pzz_arc_form)
+        public Form1(PZZ_ARC.Form1 pzz_arc_form, byte[] byte_array, string input_file)
         {
             InitializeComponent();
             pzz_arc = pzz_arc_form;
+            OpenFromPZZARC(byte_array);
+            SetInputPath(input_file);
         }
 
         public void OpenFromPZZARC(byte[] txb_buffer)
@@ -51,10 +53,6 @@ namespace TXBeditor
                 SetListFromImageList();
                 EnableUIGroupBoxes();
                 EnableUISaveOptions();
-                ImageListView.Items[0].Selected = true;
-                ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
-                UpdateTIM2PropertyList(tim2_serializer.Open(new MemoryStream(current_image.byte_array)));
-                EnableUIImportExport();
             }
         }
 

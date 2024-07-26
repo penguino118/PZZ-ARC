@@ -464,10 +464,10 @@ namespace PZZ_ARC
         {
             int index = FileTree.SelectedNode.Index;
             PZZFile txb = file_list[index];
-            var txb_form = new TXBeditor.Form1(this);
-            txb_form.Show();
-            txb_form.OpenFromPZZARC(txb.byte_array);
-            txb_form.SetInputPath(input_file);
+            using (var txb_form = new TXBeditor.Form1(this, txb.byte_array, input_file))
+            {
+                txb_form.ShowDialog();
+            }
         }
 
         private void StripFileFromAFS_Click(object sender, EventArgs e)
@@ -487,9 +487,10 @@ namespace PZZ_ARC
                 {
                     filelist.Add(entry.Name);
                 }
-                var filepicker_form = new AFSFilePicker(this);
-                filepicker_form.Show();
-                filepicker_form.BuildTree(Path.GetFileName(input_afs), filelist);
+                using (var filepicker_form = new AFSFilePicker(this)){
+                    filepicker_form.BuildTree(Path.GetFileName(input_afs), filelist);
+                    filepicker_form.ShowDialog();
+                }
             }
         }
     }
