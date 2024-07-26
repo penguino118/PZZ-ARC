@@ -25,6 +25,7 @@ namespace PZZ_ARC
 
         }
 
+        string afs_path = "";
         string input_file = "";
         string output_file = "";
         AFS current_afs = new AFS();
@@ -48,12 +49,19 @@ namespace PZZ_ARC
             try
             {
                 StreamEntry afs_file = current_afs.Entries[file_index] as StreamEntry;
-                Stream filestream = afs_file.GetStream();
-                file_list.Clear();
-                UnpackFromStream(filestream, file_list);
-                BuildTree(file_list, afs_file.Name);
-                StripFileSave.Enabled = false;
-                StripFileSaveAs.Enabled = true;
+                if (afs_file != null) {
+                    Stream filestream = afs_file.GetStream();
+                    input_file = Path.Combine(afs_path, afs_file.Name);
+                    file_list.Clear();
+                    UnpackFromStream(filestream, file_list);
+                    BuildTree(file_list);
+                    StripFileSave.Enabled = false;
+                    StripFileSaveAs.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show("Error loading from AFS.\n" + "AFS file is null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
@@ -66,54 +74,6 @@ namespace PZZ_ARC
         {
             FileTree.Nodes.Clear();
             string filename = Path.GetFileName(input_file);
-
-            // add icons to image list, should move this elsewhere
-            ImageList IconList = new ImageList();
-            IconList.Images.Add("FileRoot", Properties.Resources.RootICO);
-            IconList.Images.Add("ModelData", Properties.Resources.ModelICO);
-            IconList.Images.Add("SkeletonData", Properties.Resources.SkeletonICO);
-            IconList.Images.Add("TextureData", Properties.Resources.TextureICO);
-            IconList.Images.Add("AnimationData", Properties.Resources.AnimationICO);
-            IconList.Images.Add("ShadowData", Properties.Resources.ShadowICO);
-            IconList.Images.Add("CollisionData", Properties.Resources.CollisionICO);
-            IconList.Images.Add("StageCollisionData", Properties.Resources.StageCollisionICO);
-            IconList.Images.Add("TextData", Properties.Resources.TextICO);
-            IconList.Images.Add("Unknown", Properties.Resources.UnknownICO);
-            IconList.Images.Add("UIStub", Properties.Resources.UIStub);
-            FileTree.ImageList = IconList;
-
-            // create root, pzz itself
-            TreeNode rootNode = new TreeNode();
-            rootNode.Text = filename;
-            rootNode.ImageIndex = 0;
-            FileTree.Nodes.Add(rootNode);
-
-            for (int i = 0; i < file_list.Count; i++)
-            {
-                var file = file_list[i];
-                TreeNode fileNode = new TreeNode();
-                fileNode.Text = "File " + i.ToString("D3") + " (." + GetFileExtension(file.type) + ")"; // name
-
-                if (file.byte_array.Count() > 0)
-                {
-                    fileNode.ImageKey = file.type;
-                    fileNode.SelectedImageKey = file.type;
-                }
-                else // if file is empty
-                {
-                    fileNode.ImageKey = "UIStub";
-                    fileNode.SelectedImageKey = "UIStub";
-                    fileNode.ToolTipText = "Empty Data";
-                }
-                FileTree.Nodes[rootNode.Index].Nodes.Add(fileNode); // add to root
-            }
-            rootNode.Expand();
-        }
-
-        private void BuildTree(List<PZZFile> file_list, string root_name) // for afs load
-        {
-            FileTree.Nodes.Clear();
-            string filename = root_name;
 
             // add icons to image list, should move this elsewhere
             ImageList IconList = new ImageList();
@@ -215,7 +175,10 @@ namespace PZZ_ARC
                     {
                         WriteOutputData(writer, stream, file_list);
                     }
+
                 }
+
+                if (StripFileSave.Enabled == false) StripFileSave.Enabled = true;
             }
         }
         private void UpdatePropertyGrid()
@@ -378,9 +341,7 @@ namespace PZZ_ARC
 
         private void ContextPZZExportAll_Click(object sender, EventArgs e)
         {
-            ffd.InputPath = input_file;
-
-            if (ffd.ShowDialog(IntPtr.Zero) == true)
+            if (ffd.ShowDialog(this.Handle) == true)
             {
                 int count = 0;
                 int index = 0;
@@ -406,8 +367,7 @@ namespace PZZ_ARC
 
         private void ContextPZZImportAll_Click(object sender, EventArgs e)
         {
-            ffd.InputPath = input_file;
-            if (ffd.ShowDialog(IntPtr.Zero) == true)
+            if (ffd.ShowDialog(this.Handle) == true)
             {
                 string input_path = ffd.ResultPath;
                 int replaced_count = 0;
@@ -507,18 +467,22 @@ namespace PZZ_ARC
             var txb_form = new TXBeditor.Form1(this);
             txb_form.Show();
             txb_form.OpenFromPZZARC(txb.byte_array);
+            txb_form.SetInputPath(input_file);
         }
 
         private void StripFileFromAFS_Click(object sender, EventArgs e)
         {
+            if (afs_path.Length != 0) ofd.InitialDirectory = Path.GetDirectoryName(afs_path);
             ofd.Title = "Select AFS File";
             ofd.Filter = "AFS Files|*.afs";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                
                 string input_afs = ofd.FileName;
+                afs_path = input_afs;
+
                 List<string> filelist = new List<string>();
                 current_afs = new AFS(input_afs);
-                
                 foreach (StreamEntry entry in current_afs.Entries)
                 {
                     filelist.Add(entry.Name);

@@ -63,6 +63,11 @@ namespace TXBeditor
             save_to_pzzarc = val;
         }
 
+        public void SetInputPath(string path)
+        {
+            input_file = path;
+        }
+
         public static float Clamp(float value, float min, float max)
         {
             return Math.Max(min, Math.Min(max, value));
@@ -163,9 +168,7 @@ namespace TXBeditor
 
         private void ImgLib_LoadImage(byte[] TIM2_buffer, float scale_multiplier)
         {
-            //MetadataReader reader;
-            //MemoryStream TIM2_stream = new MemoryStream(TIM2_buffer);
-            //serializer = TextureFormatSerializerProvider.FromStream(TIM2_stream);
+
             TextureFormat texture = GetTexture(TIM2_buffer);
             UpdateTIM2PropertyList(texture);
             Image TIM2_Image = texture.GetImage();
@@ -565,9 +568,7 @@ namespace TXBeditor
 
         private void StripEditExportAll_Click(object sender, EventArgs e)
         {
-            ffd.InputPath = input_file;
-
-            if (ffd.ShowDialog(IntPtr.Zero) == true)
+            if (ffd.ShowDialog(this.Handle) == true)
             {
                 string output_path = ffd.ResultPath;
                 int count = 0;
@@ -587,8 +588,7 @@ namespace TXBeditor
 
         private void EditStripImportAll_Click(object sender, EventArgs e) // This sucks
         {
-            ffd.InputPath = input_file;
-            if (ffd.ShowDialog(IntPtr.Zero) == true)
+            if (ffd.ShowDialog(this.Handle) == true)
             {
                 string input_path = ffd.ResultPath;
                 int replaced_count = 0;

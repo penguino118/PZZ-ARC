@@ -116,42 +116,42 @@
             // 
             StripFileOpen.Image = PZZ_ARC.Properties.Resources.UIFileOpen;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(121, 22);
+            StripFileOpen.Size = new Size(180, 22);
             StripFileOpen.Text = "Open...";
             StripFileOpen.Click += StripFileOpen_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(118, 6);
+            toolStripSeparator2.Size = new Size(177, 6);
             // 
             // StripFileSave
             // 
             StripFileSave.Enabled = false;
             StripFileSave.Image = PZZ_ARC.Properties.Resources.UIFileSave;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(121, 22);
-            StripFileSave.Text = "Save";
+            StripFileSave.Size = new Size(180, 22);
+            StripFileSave.Text = "Save to PZZ";
             StripFileSave.Click += StripFileSave_Click;
             // 
             // StripFileSaveAs
             // 
             StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(121, 22);
+            StripFileSaveAs.Size = new Size(180, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(118, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // StripFileQuit
             // 
             StripFileQuit.Image = PZZ_ARC.Properties.Resources.UIExit;
             StripFileQuit.Name = "StripFileQuit";
-            StripFileQuit.Size = new Size(121, 22);
+            StripFileQuit.Size = new Size(180, 22);
             StripFileQuit.Text = "Quit";
             StripFileQuit.Click += StripFileQuit_Click;
             // 
@@ -527,6 +527,7 @@
             // 
             splitContainer2.Dock = DockStyle.Fill;
             splitContainer2.FixedPanel = FixedPanel.Panel2;
+            splitContainer2.IsSplitterFixed = true;
             splitContainer2.Location = new Point(0, 0);
             splitContainer2.Name = "splitContainer2";
             splitContainer2.Orientation = Orientation.Horizontal;
