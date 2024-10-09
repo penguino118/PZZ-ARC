@@ -178,6 +178,7 @@ namespace PZZ_ARC
 
                 }
 
+                input_file = output_file;
                 if (StripFileSave.Enabled == false) StripFileSave.Enabled = true;
             }
         }
