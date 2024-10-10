@@ -1,18 +1,5 @@
 ﻿using Rainbow.ImgLib.Formats.Implementation;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Formats.Asn1;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static Rainbow.ImgLib.Formats.Implementation.TIM2Texture;
 using Rainbow.ImgLib.Formats.Serialization;
-using Rainbow.ImgLib.Formats;
 
 namespace TXBeditor.TXBEditor
 {

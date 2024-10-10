@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static GioGioTXT.ggText;
+﻿using System.Text;
 using static GioGioTXT.Form1;
-using System.IO;
 
 namespace GioGioTXT
 {

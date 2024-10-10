@@ -1,13 +1,7 @@
 using AFSLib;
-using GioGioTXT.GioGioTXT;
-using System;
-using System.IO;
 using System.Text;
-using System.Windows.Forms;
-using TXBeditor.TXBEditor;
 using static GioGioTXT.ggText;
 using static PZZ_ARC.PZZArc.PZZ;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GioGioTXT
 {
