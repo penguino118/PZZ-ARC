@@ -116,21 +116,21 @@
             // 
             StripFileOpen.Image = PZZ_ARC.Properties.Resources.UIFileOpen;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(180, 22);
+            StripFileOpen.Size = new Size(136, 22);
             StripFileOpen.Text = "Open...";
             StripFileOpen.Click += StripFileOpen_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(133, 6);
             // 
             // StripFileSave
             // 
             StripFileSave.Enabled = false;
             StripFileSave.Image = PZZ_ARC.Properties.Resources.UIFileSave;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(180, 22);
+            StripFileSave.Size = new Size(136, 22);
             StripFileSave.Text = "Save to PZZ";
             StripFileSave.Click += StripFileSave_Click;
             // 
@@ -138,20 +138,20 @@
             // 
             StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(180, 22);
+            StripFileSaveAs.Size = new Size(136, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(133, 6);
             // 
             // StripFileQuit
             // 
             StripFileQuit.Image = PZZ_ARC.Properties.Resources.UIExit;
             StripFileQuit.Name = "StripFileQuit";
-            StripFileQuit.Size = new Size(180, 22);
+            StripFileQuit.Size = new Size(136, 22);
             StripFileQuit.Text = "Quit";
             StripFileQuit.Click += StripFileQuit_Click;
             // 
@@ -227,7 +227,7 @@
             // 
             ImageListPushUp.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             ImageListPushUp.Image = PZZ_ARC.Properties.Resources.UIMoveUp;
-            ImageListPushUp.Location = new Point(203, 184);
+            ImageListPushUp.Location = new Point(203, 188);
             ImageListPushUp.Name = "ImageListPushUp";
             ImageListPushUp.Size = new Size(26, 50);
             ImageListPushUp.TabIndex = 9;
@@ -252,7 +252,7 @@
             // 
             ImageListPushDown.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             ImageListPushDown.Image = PZZ_ARC.Properties.Resources.UIMoveDown;
-            ImageListPushDown.Location = new Point(203, 240);
+            ImageListPushDown.Location = new Point(203, 244);
             ImageListPushDown.Name = "ImageListPushDown";
             ImageListPushDown.Size = new Size(26, 50);
             ImageListPushDown.TabIndex = 10;
@@ -320,7 +320,7 @@
             GroupBoxImageList.Enabled = false;
             GroupBoxImageList.Location = new Point(3, 0);
             GroupBoxImageList.Name = "GroupBoxImageList";
-            GroupBoxImageList.Size = new Size(233, 302);
+            GroupBoxImageList.Size = new Size(233, 306);
             GroupBoxImageList.TabIndex = 18;
             GroupBoxImageList.TabStop = false;
             // 
@@ -334,7 +334,7 @@
             ImageListView.Location = new Point(6, 14);
             ImageListView.MultiSelect = false;
             ImageListView.Name = "ImageListView";
-            ImageListView.Size = new Size(191, 276);
+            ImageListView.Size = new Size(191, 280);
             ImageListView.TabIndex = 1;
             ImageListView.UseCompatibleStateImageBehavior = false;
             ImageListView.View = View.Details;
@@ -493,12 +493,13 @@
             // 
             // TIM2PictureBox
             // 
+            TIM2PictureBox.BorderStyle = BorderStyle.FixedSingle;
             TIM2PictureBox.Dock = DockStyle.Fill;
             TIM2PictureBox.Location = new Point(0, 0);
             TIM2PictureBox.Margin = new Padding(5);
             TIM2PictureBox.Name = "TIM2PictureBox";
             TIM2PictureBox.Padding = new Padding(0, 0, 5, 5);
-            TIM2PictureBox.Size = new Size(512, 511);
+            TIM2PictureBox.Size = new Size(512, 512);
             TIM2PictureBox.TabIndex = 3;
             TIM2PictureBox.TabStop = false;
             // 
@@ -519,7 +520,7 @@
             // 
             splitContainer1.Panel2.Controls.Add(TIM2PictureBox);
             splitContainer1.Panel2.Margin = new Padding(0, 0, 5, 5);
-            splitContainer1.Size = new Size(752, 511);
+            splitContainer1.Size = new Size(752, 512);
             splitContainer1.SplitterDistance = 236;
             splitContainer1.TabIndex = 20;
             // 
@@ -544,8 +545,9 @@
             splitContainer2.Panel2.Controls.Add(GroupBoxTIM2);
             splitContainer2.Panel2.Controls.Add(GroupBoxView);
             splitContainer2.Panel2MinSize = 205;
-            splitContainer2.Size = new Size(236, 511);
-            splitContainer2.SplitterDistance = 302;
+            splitContainer2.Size = new Size(236, 512);
+            splitContainer2.SplitterDistance = 306;
+            splitContainer2.SplitterWidth = 1;
             splitContainer2.TabIndex = 0;
             // 
             // Form1
@@ -553,10 +555,10 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(752, 536);
+            ClientSize = new Size(752, 537);
             Controls.Add(splitContainer1);
             Controls.Add(toolStrip1);
-            MinimumSize = new Size(768, 573);
+            MinimumSize = new Size(768, 576);
             Name = "Form1";
             Text = " TXB Editor";
             toolStrip1.ResumeLayout(false);
