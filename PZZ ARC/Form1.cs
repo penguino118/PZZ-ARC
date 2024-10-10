@@ -34,6 +34,12 @@ namespace PZZ_ARC
         readonly SaveFileDialog sfd = new SaveFileDialog();
         readonly FolderPicker ffd = new FolderPicker();
 
+        private void UpdateTitlebar()
+        {
+            this.Text = "TXB Editor";
+            if (input_file == "") return;
+            this.Text += " - [" + input_file + "]";
+        }
 
         public void ReplaceBufferAtSelected(byte[] new_buffer)
         {
@@ -66,6 +72,7 @@ namespace PZZ_ARC
                     BuildTree(file_list);
                     StripFileSave.Enabled = false;
                     StripFileSaveAs.Enabled = true;
+                    UpdateTitlebar();
                 }
                 else
                 {
@@ -148,6 +155,7 @@ namespace PZZ_ARC
                 BuildTree(file_list);
                 StripFileSave.Enabled = true;
                 StripFileSaveAs.Enabled = true;
+                UpdateTitlebar();
             }
 
         }
@@ -199,6 +207,7 @@ namespace PZZ_ARC
                 file_modified = false;
                 input_file = output_file;
                 if (StripFileSave.Enabled == false) StripFileSave.Enabled = true;
+                UpdateTitlebar();
             }
         }
         private void UpdatePropertyGrid()
@@ -462,6 +471,7 @@ namespace PZZ_ARC
             ffd.Title = "Create PZZ From Folder";
             if (ffd.ShowDialog(IntPtr.Zero) == true)
             {
+                
                 if (file_modified)
                 {
                     DialogResult save_confirmation = GetSaveConfirmation();
@@ -471,6 +481,7 @@ namespace PZZ_ARC
                 }
 
                 string input_path = ffd.ResultPath;
+                input_file = input_path;
 
                 if (Directory.EnumerateFiles(input_path, "*.*").Count() > 255)
                 {
@@ -491,8 +502,9 @@ namespace PZZ_ARC
                 BuildTree(file_list);
                 FileTree.SelectedNode = FileTree.Nodes[0].Nodes[0];
                 UpdatePropertyGrid();
-                StripFileSave.Enabled = true;
+                StripFileSave.Enabled = false;
                 StripFileSaveAs.Enabled = true;
+                UpdateTitlebar();
             }
         }
 
