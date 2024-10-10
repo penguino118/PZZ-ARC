@@ -116,7 +116,7 @@
             // 
             StripFileOpen.Image = PZZ_ARC.Properties.Resources.UIFileOpen;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(180, 22);
+            StripFileOpen.Size = new Size(184, 22);
             StripFileOpen.Text = "Open...";
             StripFileOpen.Visible = false;
             StripFileOpen.Click += StripFileOpen_Click;
@@ -124,7 +124,7 @@
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(181, 6);
             toolStripSeparator2.Visible = false;
             // 
             // StripFileSave
@@ -132,7 +132,8 @@
             StripFileSave.Enabled = false;
             StripFileSave.Image = PZZ_ARC.Properties.Resources.UIFileSave;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(180, 22);
+            StripFileSave.ShortcutKeys = Keys.Control | Keys.S;
+            StripFileSave.Size = new Size(184, 22);
             StripFileSave.Text = "Save to PZZ";
             StripFileSave.Click += StripFileSave_Click;
             // 
@@ -140,20 +141,21 @@
             // 
             StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(180, 22);
+            StripFileSaveAs.ShortcutKeys = Keys.Control | Keys.Alt | Keys.S;
+            StripFileSaveAs.Size = new Size(184, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(181, 6);
             // 
             // StripFileQuit
             // 
             StripFileQuit.Image = PZZ_ARC.Properties.Resources.UIExit;
             StripFileQuit.Name = "StripFileQuit";
-            StripFileQuit.Size = new Size(180, 22);
+            StripFileQuit.Size = new Size(184, 22);
             StripFileQuit.Text = "Quit";
             StripFileQuit.Click += StripFileQuit_Click;
             // 
@@ -563,6 +565,7 @@
             MinimumSize = new Size(768, 576);
             Name = "Form1";
             Text = " TXB Editor";
+            FormClosing += Form1_FormClosing;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             StripBGContextMenu.ResumeLayout(false);

@@ -23,7 +23,7 @@ namespace TXBeditor
         readonly FolderPicker ffd = new FolderPicker();
         readonly ColorDialog cld = new ColorDialog();
 
-        bool save_to_pzzarc = false;
+        bool file_modified = false;
         PZZ_ARC.Form1 pzz_arc;
 
         public Form1(PZZ_ARC.Form1 pzz_arc_form, byte[] byte_array, string input_file)
@@ -34,22 +34,24 @@ namespace TXBeditor
             SetInputPath(input_file);
         }
 
+        private DialogResult GetSaveConfirmation()
+        {
+            DialogResult result = MessageBox.Show("The TXB file was modified.\nSave changes to the PZZ?", "Warning",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            return result;
+        }
+
         public void OpenFromPZZARC(byte[] txb_buffer)
         {
             image_list = TXB.LoadFromByteArray(serializer, txb_buffer);
             if (image_list.Count > 0)
             {
-                SetPZZArcSave(true);
                 SetListFromImageList();
                 EnableUIGroupBoxes();
                 EnableUISaveOptions();
             }
         }
 
-        private void SetPZZArcSave(bool val)
-        {
-            save_to_pzzarc = val;
-        }
 
         public void SetInputPath(string path)
         {
@@ -232,6 +234,7 @@ namespace TXBeditor
             }
             image_list.ElementAt(ImageListView.SelectedIndices[0]).load_index = Convert.ToInt32(CurrImgIDField.Value); // List
             ImageListView.SelectedItems[0].SubItems[1].Text = CurrImgIDField.Value.ToString(); // UI
+            file_modified = true;
         }
 
         private void MoveImageList(int difference)
@@ -249,6 +252,7 @@ namespace TXBeditor
 
                     SetListFromImageList();
                     ImageListView.Items[new_index].Selected = true;
+                    file_modified = true;
                 }
 
             }
@@ -297,6 +301,7 @@ namespace TXBeditor
                             byte_array = image_buffer
                         });
                         SetListFromImageList();
+                        file_modified = true;
                     }
                 }
             }
@@ -323,6 +328,7 @@ namespace TXBeditor
 
                 ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
                 UpdateTIM2PropertyList(tim2_serializer.Open(new MemoryStream(current_image.byte_array)));
+                file_modified = true;
             }
         }
 
@@ -348,6 +354,7 @@ namespace TXBeditor
                     }
                     File.WriteAllBytes(output_texture, tim2_bytes);
                 }
+
             }
         }
 
@@ -414,7 +421,6 @@ namespace TXBeditor
                 image_list = TXB.LoadFromFile(serializer, input_file);
                 if (image_list.Count > 0)
                 {
-                    SetPZZArcSave(false);
                     SetListFromImageList();
                     EnableUIGroupBoxes();
                     EnableUISaveOptions();
@@ -434,32 +440,13 @@ namespace TXBeditor
         private void StripFileSave_Click(object sender, EventArgs e)
         {
 
-            if (save_to_pzzarc)
+            using (var stream = new MemoryStream())
             {
-                using (var stream = new MemoryStream())
+                using (var writer = new BinaryWriter(stream))
                 {
-                    using (var writer = new BinaryWriter(stream))
-                    {
-                        TXB.WriteOutputData(writer, image_list);
-                    }
-                    pzz_arc.ReplaceBufferAtSelected(stream.ToArray());
+                    TXB.WriteOutputData(writer, image_list);
                 }
-            }
-            else
-            {
-                if (input_file is null)
-                {
-                    MessageBox.Show("The ouput path for the file is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                using (var stream = File.Open(input_file, FileMode.Create))
-                {
-                    using (var writer = new BinaryWriter(stream))
-                    {
-                        TXB.WriteOutputData(writer, image_list);
-                    }
-                }
+                pzz_arc.ReplaceBufferAtSelected(stream.ToArray());
             }
         }
 
@@ -548,6 +535,7 @@ namespace TXBeditor
                     byte[] current_tim2 = image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array;
                     ImgLib_ImportTIM2(current_tim2, input_png, ImageListView.SelectedIndices[0]);
                     ImgLib_LoadImage(image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array);
+                    file_modified = true;
                 }
 
             }
@@ -591,6 +579,7 @@ namespace TXBeditor
                         {
                             ImageInfo current_image = image_list.ElementAt(index);
                             ImgLib_ImportTIM2(current_image.byte_array, file, index);
+                            file_modified = true;
                             replaced_count++;
                         }
                         index++;
@@ -656,7 +645,7 @@ namespace TXBeditor
             }
         }
 
-        
+
 
         private void ComboAlignmentChange(object sender, EventArgs e)
         {
@@ -669,6 +658,7 @@ namespace TXBeditor
             current_image.byte_alignment = ComboAlignment.SelectedIndex == 0 ? 16 : 128;
             UpdateFromTIM2Properties();
             ImgLib_LoadImage(image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array);
+            file_modified = true;
 
         }
 
@@ -698,6 +688,22 @@ namespace TXBeditor
             current_image.bit_depth = new_bpp;
             UpdateFromTIM2Properties();
             ImgLib_LoadImage(image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array);
+            file_modified = true;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (file_modified)
+            {
+                DialogResult save_confirmation = GetSaveConfirmation();
+                if (save_confirmation == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                else if (save_confirmation == DialogResult.Yes) StripFileSave_Click(sender, e);
+                file_modified = false;
+            }
         }
     }
 }
