@@ -49,7 +49,8 @@
             ContextPZZImport = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             ContextPZZModifyTXB = new ToolStripMenuItem();
-            ContextPZZModifySeparator = new ToolStripSeparator();
+            ContextPZZModifyTXT = new ToolStripMenuItem();
+            ContextToolSeparator = new ToolStripSeparator();
             ContextPZZStub = new ToolStripMenuItem();
             ContextPZZDelete = new ToolStripMenuItem();
             ContextPZZDuplicate = new ToolStripMenuItem();
@@ -184,15 +185,15 @@
             // 
             // ContextPZZInner
             // 
-            ContextPZZInner.Items.AddRange(new ToolStripItem[] { ContextPZZExport, ContextPZZImport, toolStripSeparator1, ContextPZZModifyTXB, ContextPZZModifySeparator, ContextPZZStub, ContextPZZDelete, ContextPZZDuplicate, toolStripSeparator2, ContextPZZMoveUp, ContextPZZMoveDown });
+            ContextPZZInner.Items.AddRange(new ToolStripItem[] { ContextPZZExport, ContextPZZImport, toolStripSeparator1, ContextPZZModifyTXB, ContextPZZModifyTXT, ContextToolSeparator, ContextPZZStub, ContextPZZDelete, ContextPZZDuplicate, toolStripSeparator2, ContextPZZMoveUp, ContextPZZMoveDown });
             ContextPZZInner.Name = "ContextPZZInner";
-            ContextPZZInner.Size = new Size(180, 198);
+            ContextPZZInner.Size = new Size(184, 220);
             // 
             // ContextPZZExport
             // 
             ContextPZZExport.Image = Properties.Resources.UIExport;
             ContextPZZExport.Name = "ContextPZZExport";
-            ContextPZZExport.Size = new Size(179, 22);
+            ContextPZZExport.Size = new Size(183, 22);
             ContextPZZExport.Text = "Export";
             ContextPZZExport.Click += ContextPZZExport_Click;
             // 
@@ -200,34 +201,42 @@
             // 
             ContextPZZImport.Image = Properties.Resources.UIImport;
             ContextPZZImport.Name = "ContextPZZImport";
-            ContextPZZImport.Size = new Size(179, 22);
+            ContextPZZImport.Size = new Size(183, 22);
             ContextPZZImport.Text = "Import";
             ContextPZZImport.Click += ContextPZZImport_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(176, 6);
+            toolStripSeparator1.Size = new Size(180, 6);
             // 
             // ContextPZZModifyTXB
             // 
             ContextPZZModifyTXB.Name = "ContextPZZModifyTXB";
-            ContextPZZModifyTXB.Size = new Size(179, 22);
+            ContextPZZModifyTXB.Size = new Size(183, 22);
             ContextPZZModifyTXB.Text = "Modify in TXBEditor";
             ContextPZZModifyTXB.Visible = false;
             ContextPZZModifyTXB.Click += ContextPZZModifyTXB_Click;
             // 
-            // ContextPZZModifySeparator
+            // ContextPZZModifyTXT
             // 
-            ContextPZZModifySeparator.Name = "ContextPZZModifySeparator";
-            ContextPZZModifySeparator.Size = new Size(176, 6);
-            ContextPZZModifySeparator.Visible = false;
+            ContextPZZModifyTXT.Name = "ContextPZZModifyTXT";
+            ContextPZZModifyTXT.Size = new Size(183, 22);
+            ContextPZZModifyTXT.Text = "Modify in GioGioTXT";
+            ContextPZZModifyTXT.Visible = false;
+            ContextPZZModifyTXT.Click += ContextPZZModifyTXT_Click;
+            // 
+            // ContextToolSeparator
+            // 
+            ContextToolSeparator.Name = "ContextToolSeparator";
+            ContextToolSeparator.Size = new Size(180, 6);
+            ContextToolSeparator.Visible = false;
             // 
             // ContextPZZStub
             // 
             ContextPZZStub.Image = Properties.Resources.UIStub;
             ContextPZZStub.Name = "ContextPZZStub";
-            ContextPZZStub.Size = new Size(179, 22);
+            ContextPZZStub.Size = new Size(183, 22);
             ContextPZZStub.Text = "Stub";
             ContextPZZStub.ToolTipText = "Keep the file on the filelist, but make the byte array empty";
             ContextPZZStub.Click += ContextPZZStub_Click;
@@ -236,7 +245,7 @@
             // 
             ContextPZZDelete.Image = Properties.Resources.UIDelete;
             ContextPZZDelete.Name = "ContextPZZDelete";
-            ContextPZZDelete.Size = new Size(179, 22);
+            ContextPZZDelete.Size = new Size(183, 22);
             ContextPZZDelete.Text = "Delete";
             ContextPZZDelete.Click += ContextPZZDelete_Click;
             // 
@@ -244,20 +253,20 @@
             // 
             ContextPZZDuplicate.Image = Properties.Resources.UIDuplicate;
             ContextPZZDuplicate.Name = "ContextPZZDuplicate";
-            ContextPZZDuplicate.Size = new Size(179, 22);
+            ContextPZZDuplicate.Size = new Size(183, 22);
             ContextPZZDuplicate.Text = "Duplicate";
             ContextPZZDuplicate.Click += ContextPZZDuplicate_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(176, 6);
+            toolStripSeparator2.Size = new Size(180, 6);
             // 
             // ContextPZZMoveUp
             // 
             ContextPZZMoveUp.Image = Properties.Resources.UIMoveUp;
             ContextPZZMoveUp.Name = "ContextPZZMoveUp";
-            ContextPZZMoveUp.Size = new Size(179, 22);
+            ContextPZZMoveUp.Size = new Size(183, 22);
             ContextPZZMoveUp.Text = "Move Up";
             ContextPZZMoveUp.Click += ContextPZZMoveUp_Click;
             // 
@@ -265,7 +274,7 @@
             // 
             ContextPZZMoveDown.Image = Properties.Resources.UIMoveDown;
             ContextPZZMoveDown.Name = "ContextPZZMoveDown";
-            ContextPZZMoveDown.Size = new Size(179, 22);
+            ContextPZZMoveDown.Size = new Size(183, 22);
             ContextPZZMoveDown.Text = "Move Down";
             ContextPZZMoveDown.Click += ContextPZZMoveDown_Click;
             // 
@@ -388,7 +397,8 @@
         private ToolStripMenuItem StripFileFromFolder;
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripMenuItem ContextPZZModifyTXB;
-        private ToolStripSeparator ContextPZZModifySeparator;
+        private ToolStripSeparator ContextToolSeparator;
         private ToolStripMenuItem StripFileFromAFS;
+        private ToolStripMenuItem ContextPZZModifyTXT;
     }
 }

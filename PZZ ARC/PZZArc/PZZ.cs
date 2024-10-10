@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System.ComponentModel.Design;
 using System.Drawing.Design;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace PZZ_ARC.PZZArc
 {
@@ -52,8 +53,8 @@ namespace PZZ_ARC.PZZArc
                 set { this.compressed = value; }
             }
         }
-        
-        class AMOFile : PZZFile
+
+        public class AMOFile : PZZFile
         {
             int mesh_count
             {
@@ -140,7 +141,7 @@ namespace PZZ_ARC.PZZArc
             }
         }
 
-        class TXBFile : PZZFile
+        public class TXBFile : PZZFile
         {
             int texture_count 
             {
@@ -168,10 +169,10 @@ namespace PZZ_ARC.PZZArc
             }
         }
 
-        class TextFile : PZZFile
+        public class TextFile : PZZFile
         {
             public Encoding shift_jis = CodePagesEncodingProvider.Instance.GetEncoding(932);
-            string text
+            public string text
             {
 
                 get
@@ -226,6 +227,7 @@ namespace PZZ_ARC.PZZArc
                 get { return this.text; }
                 set { this.text = value; }
             }
+
 
         }
 

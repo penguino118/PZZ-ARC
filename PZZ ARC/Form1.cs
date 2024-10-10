@@ -239,7 +239,9 @@ namespace PZZ_ARC
                 FileTree.SelectedNode = e.Node;
                 e.Node.ContextMenuStrip = ContextPZZInner; // context menu for files inside pzz
                 StripEdit.DropDown = ContextPZZInner; // for toolbar edit menu
-                SetTXBModifyVisibility(file_list[e.Node.Index].type == "TextureData"); //show txb option if selected file is txb
+                string file_type = file_list[e.Node.Index].type;
+                SetTXBModifyVisibility(file_type == "TextureData"); //show txb option if selected file is txb
+                SetTXTModifyVisibility(file_type == "TextData"); //show txt option if selected file is txt
             }
             else if (e.Node.Level == 0)
             {
@@ -324,8 +326,14 @@ namespace PZZ_ARC
 
         private void SetTXBModifyVisibility(bool value)
         {
-            ContextPZZModifySeparator.Visible = value;
+            ContextToolSeparator.Visible = value;
             ContextPZZModifyTXB.Visible = value;
+        }
+
+        private void SetTXTModifyVisibility(bool value)
+        {
+            ContextToolSeparator.Visible = value;
+            ContextPZZModifyTXT.Visible = value;
         }
 
         private void ContextPZZExport_Click(object sender, EventArgs e)
@@ -471,7 +479,7 @@ namespace PZZ_ARC
             ffd.Title = "Create PZZ From Folder";
             if (ffd.ShowDialog(IntPtr.Zero) == true)
             {
-                
+
                 if (file_modified)
                 {
                     DialogResult save_confirmation = GetSaveConfirmation();
@@ -562,6 +570,16 @@ namespace PZZ_ARC
                 }
                 else if (save_confirmation == DialogResult.Yes) StripFileSaveAs_Click(sender, e);
                 file_modified = false;
+            }
+        }
+
+        private void ContextPZZModifyTXT_Click(object sender, EventArgs e)
+        {
+            int index = FileTree.SelectedNode.Index;
+            TextFile text_file = file_list[index] as TextFile;
+            using (var giotxt_form = new GioGioTXT.Form1(this, text_file.text, index))
+            {
+                giotxt_form.ShowDialog();
             }
         }
     }
