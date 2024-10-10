@@ -24,7 +24,7 @@ namespace PZZ_ARC
             InitializeComponent();
 
         }
-
+        bool file_modified = false;
         string afs_path = "";
         string input_file = "";
         string output_file = "";
@@ -42,6 +42,14 @@ namespace PZZ_ARC
             BuildTree(file_list);
             FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index];
             UpdatePropertyGrid();
+            file_modified = true;
+        }
+
+        private DialogResult GetSaveConfirmation()
+        {
+            DialogResult result = MessageBox.Show(input_file + " was modified.\nSave changes?", "Warning",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            return result;
         }
 
         public void LoadFileFromAFS(int file_index)
@@ -49,7 +57,8 @@ namespace PZZ_ARC
             try
             {
                 StreamEntry afs_file = current_afs.Entries[file_index] as StreamEntry;
-                if (afs_file != null) {
+                if (afs_file != null)
+                {
                     Stream filestream = afs_file.GetStream();
                     input_file = Path.Combine(afs_path, afs_file.Name);
                     file_list.Clear();
@@ -124,6 +133,14 @@ namespace PZZ_ARC
             ofd.Filter = "PZZ Files|*.pzz";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                if (file_modified)
+                {
+                    DialogResult save_confirmation = GetSaveConfirmation();
+                    if (save_confirmation == DialogResult.Cancel) return;
+                    else if (save_confirmation == DialogResult.Yes) StripFileSaveAs_Click(sender, e);
+                    file_modified = false;
+                }
+
                 input_file = ofd.FileName;
 
                 file_list.Clear();
@@ -149,6 +166,7 @@ namespace PZZ_ARC
                 {
                     WriteOutputData(writer, stream, file_list);
                 }
+                file_modified = false;
             }
         }
         private void StripFileSaveAs_Click(object sender, EventArgs e)
@@ -178,6 +196,7 @@ namespace PZZ_ARC
 
                 }
 
+                file_modified = false;
                 input_file = output_file;
                 if (StripFileSave.Enabled == false) StripFileSave.Enabled = true;
             }
@@ -241,7 +260,7 @@ namespace PZZ_ARC
             else if (index == file_list.Count) FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index - 1];
             else if (index < file_list.Count && (index - 1) != -1) FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index - 1];
             else FileTree.SelectedNode = FileTree.Nodes[0].Nodes[0];
-
+            file_modified = true;
         }
 
         private void ContextPZZDuplicate_Click(object sender, EventArgs e)
@@ -250,6 +269,7 @@ namespace PZZ_ARC
             file_list.Insert(index, file_list.ElementAt(index));
             BuildTree(file_list);
             FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index];
+            file_modified = true;
         }
 
         private void MoveFileList(int difference)
@@ -268,6 +288,7 @@ namespace PZZ_ARC
                         file_list.Insert(new_index, selected);
                         BuildTree(file_list);
                         FileTree.SelectedNode = FileTree.Nodes[0].Nodes[new_index];
+                        file_modified = true;
                     }
                     catch (Exception e)  // try to restore old file position
                     {
@@ -283,11 +304,13 @@ namespace PZZ_ARC
         private void ContextPZZMoveUp_Click(object sender, EventArgs e)
         {
             MoveFileList(-1);
+            file_modified = true;
         }
 
         private void ContextPZZMoveDown_Click(object sender, EventArgs e)
         {
             MoveFileList(1);
+            file_modified = true;
         }
 
         private void SetTXBModifyVisibility(bool value)
@@ -335,6 +358,7 @@ namespace PZZ_ARC
                 BuildTree(file_list);
                 FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index];
                 UpdatePropertyGrid();
+                file_modified = true;
             }
         }
 
@@ -381,6 +405,7 @@ namespace PZZ_ARC
                         if (test_filename == Path.GetFileName(file_import))
                         {
                             ReplaceFileOnList(file_list, i, File.ReadAllBytes(file_import));
+                            file_modified = true;
                             replaced_count++;
                         }
                     }
@@ -404,6 +429,7 @@ namespace PZZ_ARC
                 AddToList(file_list, imported_file_buffer, false, type);
                 BuildTree(file_list);
                 UpdatePropertyGrid();
+                file_modified = true;
             }
         }
 
@@ -416,6 +442,7 @@ namespace PZZ_ARC
             BuildTree(file_list);
             FileTree.SelectedNode = FileTree.Nodes[0].Nodes[index];
             UpdatePropertyGrid();
+            file_modified = true;
         }
 
         private void StripAboutPZZARC_Click(object sender, EventArgs e)
@@ -435,6 +462,14 @@ namespace PZZ_ARC
             ffd.Title = "Create PZZ From Folder";
             if (ffd.ShowDialog(IntPtr.Zero) == true)
             {
+                if (file_modified)
+                {
+                    DialogResult save_confirmation = GetSaveConfirmation();
+                    if (save_confirmation == DialogResult.Cancel) return;
+                    else if (save_confirmation == DialogResult.Yes) StripFileSaveAs_Click(sender, e);
+                    file_modified = false;
+                }
+
                 string input_path = ffd.ResultPath;
 
                 if (Directory.EnumerateFiles(input_path, "*.*").Count() > 255)
@@ -478,7 +513,14 @@ namespace PZZ_ARC
             ofd.Filter = "AFS Files|*.afs";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                
+                if (file_modified)
+                {
+                    DialogResult save_confirmation = GetSaveConfirmation();
+                    if (save_confirmation == DialogResult.Cancel) return;
+                    else if (save_confirmation == DialogResult.Yes) StripFileSaveAs_Click(sender, e);
+                    file_modified = false;
+                }
+
                 string input_afs = ofd.FileName;
                 afs_path = input_afs;
 
@@ -488,10 +530,26 @@ namespace PZZ_ARC
                 {
                     filelist.Add(entry.Name);
                 }
-                using (var filepicker_form = new AFSFilePicker(this)){
+                using (var filepicker_form = new AFSFilePicker(this))
+                {
                     filepicker_form.BuildTree(Path.GetFileName(input_afs), filelist);
                     filepicker_form.ShowDialog();
                 }
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (file_modified)
+            {
+                DialogResult save_confirmation = GetSaveConfirmation();
+                if (save_confirmation == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                else if (save_confirmation == DialogResult.Yes) StripFileSaveAs_Click(sender, e);
+                file_modified = false;
             }
         }
     }
