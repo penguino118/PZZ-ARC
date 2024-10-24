@@ -23,7 +23,7 @@ namespace PZZ_ARC
 
         private void UpdateTitlebar()
         {
-            this.Text = "TXB Editor";
+            this.Text = "PZZ-ARC";
             if (input_file == "") return;
             this.Text += " - [" + input_file + "]";
         }
