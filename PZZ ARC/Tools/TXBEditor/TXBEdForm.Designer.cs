@@ -55,7 +55,6 @@
             StripBGContextMenu = new ContextMenuStrip(components);
             BGColorStripDefault = new ToolStripMenuItem();
             BGColorStripCustom = new ToolStripMenuItem();
-            GroupBoxImageList = new GroupBox();
             ImageListView = new ListView();
             image_index = new ColumnHeader();
             image_id = new ColumnHeader();
@@ -73,24 +72,27 @@
             ViewZoomAdd = new Button();
             BGColorButton = new Button();
             TIM2PictureBox = new PictureBox();
-            splitContainer1 = new SplitContainer();
-            splitContainer2 = new SplitContainer();
+            MainSplitContainer = new SplitContainer();
+            LeftMainContainer = new SplitContainer();
+            ImageListLayout = new TableLayoutPanel();
+            panel1 = new Panel();
             toolStrip1.SuspendLayout();
             StripBGContextMenu.SuspendLayout();
-            GroupBoxImageList.SuspendLayout();
             GroupBoxTXB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CurrImgIDField).BeginInit();
             GroupBoxTIM2.SuspendLayout();
             GroupBoxView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TIM2PictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
-            splitContainer2.Panel1.SuspendLayout();
-            splitContainer2.Panel2.SuspendLayout();
-            splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
+            MainSplitContainer.Panel1.SuspendLayout();
+            MainSplitContainer.Panel2.SuspendLayout();
+            MainSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)LeftMainContainer).BeginInit();
+            LeftMainContainer.Panel1.SuspendLayout();
+            LeftMainContainer.Panel2.SuspendLayout();
+            LeftMainContainer.SuspendLayout();
+            ImageListLayout.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
@@ -231,7 +233,7 @@
             // 
             ImageListPushUp.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             ImageListPushUp.Image = PZZ_ARC.Properties.Resources.UIMoveUp;
-            ImageListPushUp.Location = new Point(203, 188);
+            ImageListPushUp.Location = new Point(1, 192);
             ImageListPushUp.Name = "ImageListPushUp";
             ImageListPushUp.Size = new Size(26, 50);
             ImageListPushUp.TabIndex = 9;
@@ -243,7 +245,7 @@
             // 
             ImageListRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ImageListRemove.Image = PZZ_ARC.Properties.Resources.TXBEd_image_delete;
-            ImageListRemove.Location = new Point(203, 70);
+            ImageListRemove.Location = new Point(1, 56);
             ImageListRemove.Name = "ImageListRemove";
             ImageListRemove.Size = new Size(26, 50);
             ImageListRemove.TabIndex = 14;
@@ -256,7 +258,7 @@
             // 
             ImageListPushDown.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             ImageListPushDown.Image = PZZ_ARC.Properties.Resources.UIMoveDown;
-            ImageListPushDown.Location = new Point(203, 244);
+            ImageListPushDown.Location = new Point(1, 248);
             ImageListPushDown.Name = "ImageListPushDown";
             ImageListPushDown.Size = new Size(26, 50);
             ImageListPushDown.TabIndex = 10;
@@ -268,7 +270,7 @@
             // 
             ImageListAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ImageListAdd.Image = PZZ_ARC.Properties.Resources.TXBEd_image_add;
-            ImageListAdd.Location = new Point(203, 14);
+            ImageListAdd.Location = new Point(1, 0);
             ImageListAdd.Name = "ImageListAdd";
             ImageListAdd.Size = new Size(26, 50);
             ImageListAdd.TabIndex = 13;
@@ -280,7 +282,7 @@
             // 
             ImageListSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ImageListSave.Image = (Image)resources.GetObject("ImageListSave.Image");
-            ImageListSave.Location = new Point(203, 126);
+            ImageListSave.Location = new Point(1, 124);
             ImageListSave.Name = "ImageListSave";
             ImageListSave.Size = new Size(26, 50);
             ImageListSave.TabIndex = 15;
@@ -311,34 +313,17 @@
             BGColorStripCustom.Text = "Custom...";
             BGColorStripCustom.Click += BGColorStripCustom_Click;
             // 
-            // GroupBoxImageList
-            // 
-            GroupBoxImageList.AutoSize = true;
-            GroupBoxImageList.Controls.Add(ImageListSave);
-            GroupBoxImageList.Controls.Add(ImageListView);
-            GroupBoxImageList.Controls.Add(ImageListAdd);
-            GroupBoxImageList.Controls.Add(ImageListPushDown);
-            GroupBoxImageList.Controls.Add(ImageListRemove);
-            GroupBoxImageList.Controls.Add(ImageListPushUp);
-            GroupBoxImageList.Dock = DockStyle.Fill;
-            GroupBoxImageList.Enabled = false;
-            GroupBoxImageList.Location = new Point(3, 0);
-            GroupBoxImageList.Name = "GroupBoxImageList";
-            GroupBoxImageList.Size = new Size(233, 306);
-            GroupBoxImageList.TabIndex = 18;
-            GroupBoxImageList.TabStop = false;
-            // 
             // ImageListView
             // 
             ImageListView.AllowColumnReorder = true;
-            ImageListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ImageListView.Columns.AddRange(new ColumnHeader[] { image_index, image_id });
+            ImageListView.Dock = DockStyle.Fill;
             ImageListView.FullRowSelect = true;
             ImageListView.GridLines = true;
-            ImageListView.Location = new Point(6, 14);
+            ImageListView.Location = new Point(3, 3);
             ImageListView.MultiSelect = false;
             ImageListView.Name = "ImageListView";
-            ImageListView.Size = new Size(191, 280);
+            ImageListView.Size = new Size(192, 298);
             ImageListView.TabIndex = 1;
             ImageListView.UseCompatibleStateImageBehavior = false;
             ImageListView.View = View.Details;
@@ -507,52 +492,84 @@
             TIM2PictureBox.TabIndex = 3;
             TIM2PictureBox.TabStop = false;
             // 
-            // splitContainer1
+            // MainSplitContainer
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.FixedPanel = FixedPanel.Panel1;
-            splitContainer1.IsSplitterFixed = true;
-            splitContainer1.Location = new Point(0, 25);
-            splitContainer1.Name = "splitContainer1";
+            MainSplitContainer.Dock = DockStyle.Fill;
+            MainSplitContainer.FixedPanel = FixedPanel.Panel1;
+            MainSplitContainer.IsSplitterFixed = true;
+            MainSplitContainer.Location = new Point(0, 25);
+            MainSplitContainer.Name = "MainSplitContainer";
             // 
-            // splitContainer1.Panel1
+            // MainSplitContainer.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(splitContainer2);
-            splitContainer1.Panel1MinSize = 236;
+            MainSplitContainer.Panel1.Controls.Add(LeftMainContainer);
+            MainSplitContainer.Panel1MinSize = 236;
             // 
-            // splitContainer1.Panel2
+            // MainSplitContainer.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(TIM2PictureBox);
-            splitContainer1.Panel2.Margin = new Padding(0, 0, 5, 5);
-            splitContainer1.Size = new Size(752, 512);
-            splitContainer1.SplitterDistance = 236;
-            splitContainer1.TabIndex = 20;
+            MainSplitContainer.Panel2.Controls.Add(TIM2PictureBox);
+            MainSplitContainer.Panel2.Margin = new Padding(0, 0, 5, 5);
+            MainSplitContainer.Panel2MinSize = 30;
+            MainSplitContainer.Size = new Size(752, 511);
+            MainSplitContainer.SplitterDistance = 236;
+            MainSplitContainer.TabIndex = 20;
             // 
-            // splitContainer2
+            // LeftMainContainer
             // 
-            splitContainer2.Dock = DockStyle.Fill;
-            splitContainer2.FixedPanel = FixedPanel.Panel2;
-            splitContainer2.IsSplitterFixed = true;
-            splitContainer2.Location = new Point(0, 0);
-            splitContainer2.Name = "splitContainer2";
-            splitContainer2.Orientation = Orientation.Horizontal;
+            LeftMainContainer.Dock = DockStyle.Fill;
+            LeftMainContainer.FixedPanel = FixedPanel.Panel2;
+            LeftMainContainer.IsSplitterFixed = true;
+            LeftMainContainer.Location = new Point(0, 0);
+            LeftMainContainer.Name = "LeftMainContainer";
+            LeftMainContainer.Orientation = Orientation.Horizontal;
             // 
-            // splitContainer2.Panel1
+            // LeftMainContainer.Panel1
             // 
-            splitContainer2.Panel1.Controls.Add(GroupBoxImageList);
-            splitContainer2.Panel1.Padding = new Padding(3, 0, 0, 0);
-            splitContainer2.Panel1MinSize = 30;
+            LeftMainContainer.Panel1.Controls.Add(ImageListLayout);
+            LeftMainContainer.Panel1.Padding = new Padding(3, 0, 0, 0);
+            LeftMainContainer.Panel1MinSize = 302;
             // 
-            // splitContainer2.Panel2
+            // LeftMainContainer.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(GroupBoxTXB);
-            splitContainer2.Panel2.Controls.Add(GroupBoxTIM2);
-            splitContainer2.Panel2.Controls.Add(GroupBoxView);
-            splitContainer2.Panel2MinSize = 205;
-            splitContainer2.Size = new Size(236, 512);
-            splitContainer2.SplitterDistance = 306;
-            splitContainer2.SplitterWidth = 1;
-            splitContainer2.TabIndex = 0;
+            LeftMainContainer.Panel2.Controls.Add(GroupBoxTXB);
+            LeftMainContainer.Panel2.Controls.Add(GroupBoxTIM2);
+            LeftMainContainer.Panel2.Controls.Add(GroupBoxView);
+            LeftMainContainer.Panel2MinSize = 205;
+            LeftMainContainer.Size = new Size(236, 511);
+            LeftMainContainer.SplitterDistance = 304;
+            LeftMainContainer.SplitterWidth = 2;
+            LeftMainContainer.TabIndex = 0;
+            // 
+            // ImageListLayout
+            // 
+            ImageListLayout.ColumnCount = 2;
+            ImageListLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 84.97854F));
+            ImageListLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.02146F));
+            ImageListLayout.Controls.Add(ImageListView, 0, 0);
+            ImageListLayout.Controls.Add(panel1, 1, 0);
+            ImageListLayout.Dock = DockStyle.Fill;
+            ImageListLayout.Enabled = false;
+            ImageListLayout.Location = new Point(3, 0);
+            ImageListLayout.Name = "ImageListLayout";
+            ImageListLayout.RowCount = 1;
+            ImageListLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            ImageListLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ImageListLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ImageListLayout.Size = new Size(233, 304);
+            ImageListLayout.TabIndex = 20;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(ImageListPushDown);
+            panel1.Controls.Add(ImageListSave);
+            panel1.Controls.Add(ImageListRemove);
+            panel1.Controls.Add(ImageListPushUp);
+            panel1.Controls.Add(ImageListAdd);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(201, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(29, 298);
+            panel1.TabIndex = 2;
             // 
             // Form1
             // 
@@ -560,7 +577,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(752, 537);
-            Controls.Add(splitContainer1);
+            Controls.Add(MainSplitContainer);
             Controls.Add(toolStrip1);
             MinimumSize = new Size(768, 576);
             Name = "Form1";
@@ -569,7 +586,6 @@
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             StripBGContextMenu.ResumeLayout(false);
-            GroupBoxImageList.ResumeLayout(false);
             GroupBoxTXB.ResumeLayout(false);
             GroupBoxTXB.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CurrImgIDField).EndInit();
@@ -577,15 +593,16 @@
             GroupBoxTIM2.PerformLayout();
             GroupBoxView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)TIM2PictureBox).EndInit();
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
-            splitContainer2.Panel1.ResumeLayout(false);
-            splitContainer2.Panel1.PerformLayout();
-            splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
-            splitContainer2.ResumeLayout(false);
+            MainSplitContainer.Panel1.ResumeLayout(false);
+            MainSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)MainSplitContainer).EndInit();
+            MainSplitContainer.ResumeLayout(false);
+            LeftMainContainer.Panel1.ResumeLayout(false);
+            LeftMainContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)LeftMainContainer).EndInit();
+            LeftMainContainer.ResumeLayout(false);
+            ImageListLayout.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -611,7 +628,6 @@
         private ContextMenuStrip StripBGContextMenu;
         private ToolStripMenuItem BGColorStripDefault;
         private ToolStripMenuItem BGColorStripCustom;
-        private GroupBox GroupBoxImageList;
         private Button ImageListSave;
         private ListView ImageListView;
         private ColumnHeader image_index;
@@ -634,7 +650,10 @@
         private Button ViewZoomAdd;
         private Button BGColorButton;
         private PictureBox TIM2PictureBox;
-        private SplitContainer splitContainer1;
-        private SplitContainer splitContainer2;
+        private SplitContainer MainSplitContainer;
+        private SplitContainer LeftMainContainer;
+        private ToolStripMenuItem StripFileOpenAFS;
+        private TableLayoutPanel ImageListLayout;
+        private Panel panel1;
     }
 }

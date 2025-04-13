@@ -232,9 +232,12 @@ namespace TXBeditor
                 MessageBox.Show("There's no selected image to change the load ID to.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            image_list.ElementAt(ImageListView.SelectedIndices[0]).load_index = Convert.ToInt32(CurrImgIDField.Value); // List
-            ImageListView.SelectedItems[0].SubItems[1].Text = CurrImgIDField.Value.ToString(); // UI
-            file_modified = true;
+            if (image_list.ElementAt(ImageListView.SelectedIndices[0]).load_index != Convert.ToInt32(CurrImgIDField.Value))
+            {
+                image_list.ElementAt(ImageListView.SelectedIndices[0]).load_index = Convert.ToInt32(CurrImgIDField.Value); // List
+                ImageListView.SelectedItems[0].SubItems[1].Text = CurrImgIDField.Value.ToString(); // UI
+                file_modified = true;
+            }
         }
 
         private void MoveImageList(int difference)
@@ -360,7 +363,7 @@ namespace TXBeditor
 
         private void EnableUIGroupBoxes()
         {
-            if (GroupBoxImageList.Enabled == false) GroupBoxImageList.Enabled = true;
+            if (ImageListLayout.Enabled == false) ImageListLayout.Enabled = true;
             if (GroupBoxTXB.Enabled == false) GroupBoxTXB.Enabled = true;
             if (GroupBoxTIM2.Enabled == false) GroupBoxTIM2.Enabled = true;
             //if (TIM2DataListView.Enabled == false) TIM2DataListView.Enabled = true;
@@ -675,20 +678,23 @@ namespace TXBeditor
 
             ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
 
-            if (new_bpp < current_image.bit_depth)
+            if (new_bpp != current_image.bit_depth)
             {
-                DialogResult dialogResult = MessageBox.Show("Lowering Bit Depth will result in quality loss. Proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.No)
+                if (new_bpp < current_image.bit_depth)
                 {
-                    int new_index = bpp.FindIndex(x => (x == current_image.bit_depth));
-                    ComboBitDepth.SelectedIndex = new_index;
-                    return;
+                    DialogResult dialogResult = MessageBox.Show("Lowering Bit Depth will result in quality loss. Proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.No)
+                    {
+                        int new_index = bpp.FindIndex(x => (x == current_image.bit_depth));
+                        ComboBitDepth.SelectedIndex = new_index;
+                        return;
+                    }
                 }
+                current_image.bit_depth = new_bpp;
+                UpdateFromTIM2Properties();
+                ImgLib_LoadImage(image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array);
+                file_modified = true;
             }
-            current_image.bit_depth = new_bpp;
-            UpdateFromTIM2Properties();
-            ImgLib_LoadImage(image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array);
-            file_modified = true;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
